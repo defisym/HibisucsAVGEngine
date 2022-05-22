@@ -11,9 +11,12 @@ import {
 	, commandDocList, settingsParamDocList, langDocList, commandParamList, ParamType
 } from './lib/dict';
 
-// command
+// config
 const confBasePath: string = "conf.AvgScript.basePath";
+
+// command
 const commandBasePath: string = "config.AvgScript.basePath";
+const commandExePath: string = "config.AvgScript.exePath";
 const commandRefreshAssets: string = "config.AvgScript.refreshAssets";
 
 // settings
@@ -835,6 +838,15 @@ export async function activate(context: vscode.ExtensionContext) {
 		// updateFileList().then(() => {
 		// 	refreshFileDiagnostics();
 		// });
+	});
+
+	vscode.commands.registerCommand(commandExePath, async () => {
+		const value = await vscode.window.showInputBox({
+			// value: oldBasePath,
+			prompt: "Base path for the Exe files"
+		});
+
+		return value;
 	});
 
 	//--------------------

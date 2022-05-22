@@ -14,12 +14,13 @@
     "categories": [
         "Programming Languages",
         "Snippets",
-        "Themes"
+        "Themes",
+        "Debuggers"
     ],
     "extensionDependencies": [
         "sukumo28.wav-preview"
     ],
-    "contributes": {        
+    "contributes": {
         "languages": [
             {
                 "id": "AvgScript",
@@ -107,12 +108,63 @@
                     "when": "editorLangId == AvgScript"
                 }
             ]
-        }
+        },
+        "debuggers": [
+            {
+                "type": "AvgScript",
+                "label": "AvgScript",
+                "configurationAttributes": {
+                    "launch": {
+                        "required": [
+                            "program"
+                        ],
+                        "properties": {
+                            "program": {
+                                "type": "string",
+                                "description": "Absolute path to EXE file.",
+                                "default": "${command:AskForProgramName}"
+                            }
+                        }
+                    }
+                },
+                "initialConfigurations": [
+                    {
+                        "type": "AvgScript",
+                        "request": "launch",
+                        "name": "${2:Launch Program}",
+                        "program": "^\"${1:Program}\"",
+                            "args": [
+                                "${file}"
+                            ]
+                    }
+                ],
+                "configurationSnippets": [
+                    {
+                        "label": "AvgScript: Launch",
+                        "description": "A new configuration for launching a AvgScript debug program",
+                        "body": {
+                            "type": "AvgScript",
+                            "request": "launch",
+                            "name": "Launch Program",
+                            "program": "^\"${command:AskForProgramName}\"",
+                            "args": [
+                                "${file}"
+                            ]
+                        }
+                    }
+                ],
+                "variables": {
+                    "AskForProgramName": "config.AvgScript.exePath"
+                }
+            }
+        ]
     },
     "activationEvents": [
         "onLanguage:AvgScript",
         "onCommand:config.AvgScript.basePath",
-        "onCommand:config.AvgScript.refreshAssets"
+        "onCommand:config.AvgScript.exePath",
+        "onCommand:config.AvgScript.refreshAssets",
+        "onDebug:AvgScript"
     ],
     "scripts": {
         "vscode:prepublish": "npm run package",
